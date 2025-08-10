@@ -1,0 +1,15 @@
+# Ignore all JSON files
+*.json
+
+# But keep specific JSON templates if needed
+!example_config.json
+
+# OS-specific stuff
+.DS_Store
+Thumbs.db
+
+# MATLAB-specific temporary files
+*.asv
+*.m~ 
+*.mex*
+*.csv
