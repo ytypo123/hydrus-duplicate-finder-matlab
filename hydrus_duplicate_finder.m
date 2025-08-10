@@ -4,31 +4,32 @@
 % QUICK START (for Hydrus users)
 % ------------------------------------------------------
 % 1. In Hydrus Client, enable "Client API"
-%    (Services -> Manage Services -> Client API).
-% 2. Get an API key
-%    (Services -> Manage Services -> Client API -> Permissions -> API Key).
-% 3. Edit the CONFIGURATION section:
-%       - Your API key (api_key)
-%       - Tags to search (tags)
-%       - Tolerances for duration / aspect ratio
-%       - SSIM similarity threshold
-%       - Filter toggles (AR filter, aHash prefilter)
-% 4. Run in MATLAB. The script:
-%       - Fetches file hashes + metadata
-%       - Builds candidate pairs (duration, AR)
+% 2. Get an API key:
+% 3. Create a configuration file named "hydrus_config.json" in the same
+%    folder as this script. Example:
+%       {
+%         "api_key": "your-hydrus-api-key-here",
+%         "api_url": "http://127.0.0.1",
+%         "api_port": 42001,
+%       }
+%
+% 4. Run in MATLAB. The script will:
+%       - Load settings from hydrus_config.json
+%       - Fetch file hashes + metadata from Hydrus
+%       - Build candidate pairs (duration, AR)
 %       - Optional: perceptual-hash prefilter (aHash)
-%       - Compares thumbnails (SSIM/MS-SSIM)
-%       - Posts "potential duplicate" relationships
-%       - Prints top tags among duplicate files and saves full CSV
+%       - Compare thumbnails (SSIM/MS-SSIM)
+%       - Post "potential duplicate" relationships
+%       - Print top tags among duplicate files and save a full CSV
 %
 % Notes:
-%   • Only posts "potential duplicate" (relationship = 0).
+%   • Only posts "potential duplicate" (relationship = 0) to Hydrus.
 %   • Already-marked pairs may return "400 Bad Request" — counted as skipped.
-%   • MATLAB R2021a+ recommended for MS-SSIM (`multissim`).
+%   • MATLAB R2021a+ recommended for MS-SSIM (`multissim` function).
 %
 % Requirements:
 %   - MATLAB + Image Processing Toolbox
-%   - Hydrus Client API running
+%   - Hydrus Client API running and accessible
 % ------------------------------------------------------
 
 %% -------------------- CONFIGURATION --------------------
