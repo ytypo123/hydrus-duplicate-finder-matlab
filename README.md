@@ -1,7 +1,10 @@
 # Hydrus Duplicate Finder & Potential Duplicate Setter (MATLAB)
 
 A MATLAB script for detecting and marking **potential duplicate** files in [Hydrus Network](https://hydrusnetwork.github.io/hydrus/) using the Hydrus Client API.  
-It performs duration, aspect ratio, and perceptual hash filtering, then uses SSIM/MS-SSIM thumbnail comparison to identify likely duplicates and post them to Hydrus.
+It performs duration, aspect ratio, and perceptual hash filtering, then uses SSIM/MS-SSIM thumbnail comparison to identify likely duplicates and post them to Hydrus.  
+
+> **Note:** While this proof-of-concept works, the choice of MATLAB limits broader adoption.  
+> Re-implementing it in **Python** (with libraries like OpenCV, NumPy, and requests) would make it far more accessible to the Hydrus community.
 
 ---
 
@@ -25,33 +28,37 @@ It performs duration, aspect ratio, and perceptual hash filtering, then uses SSI
 
 ---
 
-## ⚡ Quick Start
+# ⚡ Quick Start
 
-1. **Enable Hydrus Client API**  
-   In Hydrus Client:  
-   `Services -> Manage Services -> Client API` → Enable it.
+1. **Enable Hydrus Client API**
 
 2. **Get an API Key**  
-   In Hydrus Client:  
-   `Services -> Manage Services -> Client API -> Permissions -> API Key`  
-   Copy the key.
+   Copy the key from Hydrus.
 
-3. **Configure the Script**  
-   Edit the **CONFIGURATION** section at the top:
-   - `api_key` → Your Hydrus API key
-   - `tags` → Tags to search (e.g. `{'system:filetype is video', 'system:filesize > 700MB'}`)
-   - Tolerances → `tolSeconds` (duration), `arTol` (aspect ratio)
-   - Similarity threshold → `similarity_threshold`
-   - Toggle filters → `USE_AR_FILTER`, `USE_AHASH_PREFILTER`
+3. **Create `hydrus_config.json`**  
+   Save this file in the same folder as the script:
 
-4. **Run in MATLAB**  
-   The script will:
-   - Fetch file hashes & metadata from Hydrus
-   - Filter by duration/aspect ratio
-   - (Optional) Prefilter with perceptual hash
-   - Compare thumbnails with SSIM / MS-SSIM
-   - Post **"potential duplicate"** relationships to Hydrus
-   - Print top duplicate tags and save CSV report
+    ```json
+    {
+      "api_key": "your-hydrus-api-key-here",
+      "api_url": "http://127.0.0.1",
+      "api_port": 42001
+    }
+    ```
+
+---
+
+## Run in MATLAB
+
+The script will:
+
+- Load settings from `hydrus_config.json`
+- Fetch file hashes & metadata from Hydrus
+- Filter by duration/aspect ratio
+- *(Optional)* Prefilter with perceptual hash
+- Compare thumbnails with SSIM / MS-SSIM
+- Post "potential duplicate" relationships to Hydrus
+- Print top duplicate tags and save a CSV report
 
 ---
 
@@ -59,9 +66,9 @@ It performs duration, aspect ratio, and perceptual hash filtering, then uses SSI
 
 | Parameter                | Description | Example |
 |--------------------------|-------------|---------|
-| `tags`                   | Tags to search in Hydrus | `{'system:filetype is video'}` |
-| `api_key`                | Hydrus API key | `'xxxxxxxx...'` |
-| `api_URL`                | Hydrus API base URL | `'http://127.0.0.1:42001'` |
+| `tags`                   | Tags to search in Hydrus | `{"system:filetype is video"}` |
+| `api_key`                | Hydrus API key | `"xxxxxxxx..."` |
+| `api_URL`                | Hydrus API base URL | `"http://127.0.0.1:42001"` |
 | `USE_AR_FILTER`          | Enable aspect ratio filtering | `true` |
 | `USE_AHASH_PREFILTER`    | Enable perceptual hash prefilter | `true` |
 | `tolSeconds`             | Duration tolerance in seconds | `1.0` |
@@ -110,3 +117,10 @@ similarity_threshold = 0.50;
 
 % Run script
 hydrus_duplicate_finder;
+
+```
+
+## 📢 Disclaimer
+
+This script and documentation were largely created with the assistance of ChatGPT-5.  
+This works for me and I think its a great example of what could be created using better tools like Python.
