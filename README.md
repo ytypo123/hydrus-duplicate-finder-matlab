@@ -5,6 +5,7 @@ It performs duration, aspect ratio, and perceptual hash filtering, then uses SSI
 
 > **Note:** While this proof-of-concept works, the choice of MATLAB limits broader adoption.  
 > Re-implementing it in **Python** (with libraries like OpenCV, NumPy, and requests) would make it far more accessible to the Hydrus community.
+> I am actively working on this!
 
 ---
 
